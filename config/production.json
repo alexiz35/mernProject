@@ -1,6 +1,6 @@
 {
-  "port": 5000,
+  "port": 80,
   "jwtSecret": "aleksiz",
   "mongoUri": "mongodb+srv://aleksiz:rere@cluster0.yoobcmc.mongodb.net/app?retryWrites=true&w=majority",
-  "baseUrl" : "http://localhost:5000"
+  "baseUrl" : "http://44.209.18.163/"
 }
