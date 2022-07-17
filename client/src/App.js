@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router} from "react-router-dom";
 import {useRoutes} from "./routes";
 import {useAuth} from "./hooks/auth.hook";
@@ -11,7 +11,11 @@ import 'materialize-css';
 function App() {
     const {token,login,logout,userId,ready} = useAuth()
     const isAuthenticated = !!token
+    const admin = false;
     const routes = useRoutes(isAuthenticated)
+    const [getId,setGetId] = useState(null)
+
+
 
     if (!ready) {
         return <Loader />
@@ -19,7 +23,7 @@ function App() {
 
     return (
         <AuthContext.Provider value={{
-            token,login,logout, userId, isAuthenticated
+            token,login,logout, userId, isAuthenticated, admin, getId, setGetId
         }}>
         <Router>
             {isAuthenticated && <Navbar/>}

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const LinkCard = ({link}) => {
+export const ServiceCard = ({link}) => {
     return (
         <>
 

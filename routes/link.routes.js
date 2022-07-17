@@ -2,6 +2,7 @@ const {Router} = require('express')
 const config = require('config')
 const shortid = require('shortid')
 const Link = require('../models/Link')
+const User = require('../models/User')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
@@ -34,8 +35,8 @@ router.post('/generate', auth, async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
     try {
-        const links = await Link.find({owner: req.user.userId})
-        res.json(links)
+        const services = await User.find({owner: req.user.userId})
+        res.json(services)
     } catch (e) {
         res.status(500).json({message: 'Error, try again'})
     }
@@ -43,8 +44,8 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
     try {
-        const link = await Link.findById(req.params.id)
-        res.json(link)
+        const service = await User.findById(req.params.id)
+        res.json(service)
     } catch (e) {
         res.status(500).json({message: 'Error, try again'})
     }

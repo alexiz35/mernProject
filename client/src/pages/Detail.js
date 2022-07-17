@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
 import {Loader} from "../components/Loader";
-import {LinkCard} from "../components/LinkCard";
+import {ServiceCard} from "../components/ServiceCard";
 
 export const DetailPage = () => {
     const {token} = useContext(AuthContext)
@@ -32,7 +32,7 @@ export const DetailPage = () => {
 
     return (
         <>
-            {!loading && link && <LinkCard link={link}/>}
+            {!loading && link && <ServiceCard link={link}/>}
         </>
     )
 }

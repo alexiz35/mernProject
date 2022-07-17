@@ -70,6 +70,7 @@ router.post(
                 return res.status(400).json({message: 'User do not find'})
             }
 
+            const adminState = (email==='admin@admin.com')
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
@@ -81,7 +82,7 @@ router.post(
                 config.get('jwtSecret'),
                 {expiresIn: '1h'}
             )
-            res.json({token, userId: user.id})
+            res.json({token, userId: user.id, admin: adminState})
 
         } catch (e) {
             res.status(500).json({message: 'Error, try again'})
