@@ -2,7 +2,7 @@ const {Router} = require('express')
 const config = require('config')
 const shortid = require('shortid')
 const Link = require('../models/Link')
-const User = require('../models/User')
+const Service = require('../models/Service')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
@@ -33,9 +33,11 @@ router.post('/generate', auth, async (req, res) => {
     }
 })
 
-router.get('/', auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        const services = await User.find({owner: req.user.userId})
+        const {userSelect} = req.body
+        /*const services = await Service.find({owner: req.user.userId})*/
+        const services = await Service.find({owner: userSelect._id})
         res.json(services)
     } catch (e) {
         res.status(500).json({message: 'Error, try again'})

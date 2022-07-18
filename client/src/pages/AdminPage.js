@@ -8,15 +8,15 @@ import {UsersList} from "../components/UsersList";
 
 export const AdminPage = () => {
     const navigate = useNavigate()
+    const {token,getId,user,setUser} = useContext(AuthContext)
     const [users, setUsers] = useState([])
-    const [user, setUser] = useState({
+    /*const [user, setUser] = useState({
         firstName: '----------',
         lastName: '----------',
         phone: '----------',
         email: '----------',
-    })
+    })*/
     const {loading, request} = useHttp()
-    const {token,getId} = useContext(AuthContext)
 
 
     const getUserId = () => {
@@ -30,7 +30,7 @@ export const AdminPage = () => {
 
     const fetchservices = useCallback(async () => {
         try {
-            const fetched = await request('/api/link', 'GET', null, {
+            const fetched = await request('/api/user', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
             setUsers(fetched)

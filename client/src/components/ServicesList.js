@@ -8,23 +8,35 @@ export const ServicesList = ({services: services}) => {
 
     return (
         <div className="">
-
+            <table>
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Device</th>
+                    <th>Claim</th>
+                    <th>Service</th>
+                    <th>Cost</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
                 {services.map((service, index) => {
                     return (
                         <tr key={service._id}>
                             <td>{index + 1}</td>
                             <td>{service.device}</td>
                             <td>{service.claim}</td>
-                            <td>{service.date}</td>
-                            <td>{service.cost}</td>
                             <td>{service.service}</td>
+                            <td>{service.cost}</td>
+                            <td>{new Date(service.date).toLocaleDateString()}</td>
                             <td>
                                 {<Link to={`/detail/${service._id}`}>Open</Link>}
                             </td>
                         </tr>
                     )
                 })}
-
+                </tbody>
+            </table>
         </div>
     )
 }

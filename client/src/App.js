@@ -14,6 +14,7 @@ function App() {
     const admin = false;
     const routes = useRoutes(isAuthenticated)
     const [getId,setGetId] = useState(null)
+    const [user,setUser] = useState(null)
 
 
 
@@ -23,7 +24,7 @@ function App() {
 
     return (
         <AuthContext.Provider value={{
-            token,login,logout, userId, isAuthenticated, admin, getId, setGetId
+            token,login,logout, userId, isAuthenticated, admin, getId, setGetId, user, setUser
         }}>
         <Router>
             {isAuthenticated && <Navbar/>}
