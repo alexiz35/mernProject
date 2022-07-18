@@ -4,14 +4,23 @@ import {AuthContext} from "../context/AuthContext";
 import {Loader} from "../components/Loader";
 import {ServicesList} from "../components/ServicesList";
 import {UserCard} from "../components/UserCard";
+import {useNavigate} from "react-router";
 
 export const ServicesPage = () => {
-
+    const navigate = useNavigate()
     const [services, setServices] = useState([])
     const {loading, request} = useHttp()
     const {token,getId,setGetId,user,setUser} = useContext(AuthContext)
 
 
+
+    const addHandler = () => {
+        navigate('/create')
+    }
+
+    const backHandler = () => {
+        navigate('/admin')
+    }
 
     const fetchservices = useCallback(async () => {
         try {
@@ -44,8 +53,16 @@ export const ServicesPage = () => {
                 <h1 className="center-align">Service request</h1>
             </div>
             <div className="" style={{display: 'flex',justifyContent:'space-between'}}>
-                <button className="waves-effect waves-orange btn " >Back</button>
-                <button className="waves-effect waves-green btn " >ADD request</button>
+                <button className="waves-effect waves-orange btn "
+                    onClick={backHandler}
+                >
+                    Back
+                </button>
+                <button className="waves-effect waves-green btn "
+                    onClick={addHandler}
+                >
+                    ADD request
+                </button>
             </div>
             <div className="col s12 m4 l3 blue-grey lighten-4">
                 <h4 className="center-align">User card</h4>
