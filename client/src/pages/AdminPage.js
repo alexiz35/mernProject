@@ -51,21 +51,22 @@ export const AdminPage = () => {
 
     return (
         <div className="row">
-            <div className="s12">
-                <h1 className="center-align">Admin page</h1>
+            <div className="col-12  ">
+                <h1 className="">Admin page</h1>
             </div>
 
-            <div className="col s12 m8 l9 blue-grey lighten-4">
+            <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
                 <h4 className="center-align">List users</h4>
                 {!loading && <UsersList users={users}/>}
             </div>
 
-            <div className="col s12 m4 l3 blue-grey lighten-5">
-                <h4 className="center-align">User card</h4>
+            <div className=" col-12 col-sm-4 col-md-4 col-lg-3 " style={{marginTop: '75px'}}>
+
                 {user && <UserCard user={user}/>}
                 <button className="waves-effect waves-green btn" onClick={clickCardHandler}>
                     Open
                 </button>
+
             </div>
         </div>
     )

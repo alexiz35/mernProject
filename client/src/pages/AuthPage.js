@@ -18,9 +18,9 @@ export const AuthPage = () => {
         clearError()
     }, [error, message, clearError])
 
-    useEffect(() => {
+    /*useEffect(() => {
         window.M.updateTextFields()
-    }, [])
+    }, [])*/
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -47,9 +47,52 @@ export const AuthPage = () => {
 
     return (
         <div className={"row"}>
-            <div className={"col s6 offset-s3"}>
+            <div className={"col-6 offset-3"}>
                 <h1>Auth page</h1>
-                <div className="card blue darken-1">
+                <div className="form-floating mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="name@example.com"
+                        value={form.email}
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="email">Email address</label>
+                </div>
+                <div className="form-floating">
+                    <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        value={form.password}
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="password">Password</label>
+                </div>
+                <div className="">
+                    <button
+                        className=""
+                        style={{marginRight: 10}}
+                        disabled={loading}
+                        onClick={loginHandler}
+                    >
+                        Login
+                    </button>
+                    <button
+                        className={""}
+                        onClick={registerHandler}
+                        disabled={loading}
+                    >
+                        Registration
+                    </button>
+                </div>
+
+
+                {/*  <div className="card blue darken-1">
                     <div className="card-content white-text">
                         <span className="card-title">Authorisation</span>
                         <div>
@@ -99,7 +142,7 @@ export const AuthPage = () => {
                             Registration
                         </button>
                     </div>
-                </div>
+                </div>*/}
             </div>
         </div>
     )

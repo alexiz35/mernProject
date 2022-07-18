@@ -15,8 +15,8 @@ export function UsersList(props) {
     }
 
     return (
-        <div className="">
-            <table className="highlight">
+        <div className="table-responsive">
+            <table className="table table-hover">
                 <thead>
                 <tr>
                     <th>№</th>
