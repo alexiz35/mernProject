@@ -3,10 +3,13 @@ import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
 import {Loader} from "../components/Loader";
 import {useNavigate} from "react-router";
-import {UserCard} from "../components/UserCard";
+//import UserCard from "../components/UserCard";
 import {UsersList} from "../components/UsersList";
+import {UserCard} from "../components/UserCard";
+
 
 export const AdminPage = () => {
+
     const navigate = useNavigate()
     const {token, getId, user, setUser, setPage} = useContext(AuthContext)
     const [users, setUsers] = useState([])
@@ -45,6 +48,7 @@ export const AdminPage = () => {
 
     return (
         <div className="row">
+
             <div className=" col-9 d-flex " style={{marginTop: '50px'}}>
                 <input className="form-control " type="search" placeholder="Поиск" aria-label="Поиск"/>
                 <button className="btn btn-secondary" type="submit">Поиск</button>
@@ -59,7 +63,7 @@ export const AdminPage = () => {
 
             <div className=" col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '75px'}}>
 
-                {user && <UserCard user={user}/>}
+                <UserCard user={user || undefined}/>
                 <div className="row justify-content-center">
                     <div className=" ">
                         <button className="col-12 btn btn-secondary" onClick={clickCardHandler}>
@@ -69,6 +73,7 @@ export const AdminPage = () => {
                     </div>
                 </div>
             </div>
+
         </div>
-)
+    )
 }
