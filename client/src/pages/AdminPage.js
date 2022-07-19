@@ -13,6 +13,8 @@ export const AdminPage = () => {
     const navigate = useNavigate()
     const {token, getId, user, setUser, setPage} = useContext(AuthContext)
     const [users, setUsers] = useState([])
+    const [tempUsers, setTempUsers] = useState([])
+    const [fieldUsers, setFieldUsers] = useState('email')
     const {loading, request} = useHttp()
 
 
@@ -21,41 +23,37 @@ export const AdminPage = () => {
         setUser(userFiltered[0])
     }
 
-    const searchUserHandler = (e) => {
-        let search = e.target.value
-        let arrEmail = []
-        users.map((item) => {
-            let itemEmail = item.email
-            /*    console.log('1', itemEmail)
-                console.log('2', item.email)*/
+    const getUserField = (e) => {
 
-            if (itemEmail.includes(search)) {
-                //arrEmail.push(item.email)
-
-                arrEmail.push(users.filter(value =>  { return value.email === itemEmail}))
-
-                /*console.log('if', arrEmail)*/
-            }
-        })
-
-        console.log('users1:',arrEmail)
-        /*const userFiltered = users.filter((value => value.email === getId))*/
-        setUsers(arrEmail)
-        console.log('users2:',users)
+        console.log(e.target.id)
+        setFieldUsers(e.target.id)
+        /*const userFiltered = users.filter((value => value._id === getId))
+        setUser(userFiltered[0])*/
     }
 
-    /* searchUser(arrEmail,e.target.value);*/
+    const searchUserHandler = (e) => {
+        const search = e.target.value
+        if (search === '') {
+            return setTempUsers(users)
+        }
+        setTempUsers(filterUser(users, search,fieldUsers))
+    }
 
 
-    const searchUser = (user, search) => {
-        let result = []
-        user.forEach((item) => {
-            if (search.includes(item)) {
-                return result.push(item)
+    const filterUser = (users, search, fieldUser) => {
+        let arrUsers = []
+        let tempArr = {}
+
+        users.map((item) => {
+            let itemType = item[fieldUser]
+
+            if (itemType.includes(search)) {
+                tempArr = {...users.filter(value => {return value[fieldUser] === itemType})
+                }
+                arrUsers.push(tempArr[0])
             }
-            return result
         })
-        console.log('res', result)
+        return arrUsers
     }
 
     const clickCardHandler = () => {
@@ -68,6 +66,7 @@ export const AdminPage = () => {
                 Authorization: `Bearer ${token}`
             })
             setUsers(fetched)
+            setTempUsers(fetched)
             console.log('users:', users)
         } catch (e) {
         }
@@ -96,7 +95,7 @@ export const AdminPage = () => {
             <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center ">
                 <h4 className="text-light">List users</h4>
                 <div className=" ">
-                    {!loading && <UsersList users={users}/>}
+                    {!loading && <UsersList users={tempUsers} clickField={getUserField}/>}
                 </div>
             </div>
 

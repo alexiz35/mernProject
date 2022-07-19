@@ -1,31 +1,32 @@
-import React, {useContext, useState} from "react";
-import {Link} from "react-router-dom"
+import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
+import {click} from "@testing-library/user-event/dist/click";
 
 export function UsersList(props) {
     const {getId, setGetId} = useContext(AuthContext)
-    console.log('table',props)
 
     if (!props.users.length) {
         return <p className="center">No services</p>
     }
+
 
     const clickHandler = (e) => {
         const id = e.target.getAttribute('data-item')
         setGetId(id)
     }
 
+
     return (
         <div className="table-responsive" style={{overflowY: 'auto', maxHeight: '450px'}}>
             <table className="table table-dark table-hover"  >
 
                     <thead  >
-                <tr>
+                <tr >
                     <th>№</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
+                    <th onClick={(e)=>props.clickField(e)} id="firstName">First Name</th>
+                    <th onClick={(e)=>props.clickField(e)} id="lastName">Last Name</th>
+                    <th onClick={(e)=>props.clickField(e)} id="phone">Phone</th>
+                    <th onClick={(e)=>props.clickField(e)} id="email">Email</th>
                 </tr>
                 </thead>
                 <tbody >
