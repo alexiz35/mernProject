@@ -10,7 +10,7 @@ export const ServicesPage = () => {
     const navigate = useNavigate()
     const [services, setServices] = useState([])
     const {loading, request} = useHttp()
-    const {token,getId,setGetId,user,setUser} = useContext(AuthContext)
+    const {token,getId,setGetId,user,setUser,setPage} = useContext(AuthContext)
 
 
 
@@ -35,7 +35,7 @@ export const ServicesPage = () => {
 
     useEffect(() => {
         fetchservices()
-        console.log('Service:',getId)
+        setPage('Service request')
         //console.log('ServiceID:',userId)
 
     }, [fetchservices])
@@ -49,27 +49,26 @@ export const ServicesPage = () => {
         <div className="row">
 
 
-            <div className="s12">
-                <h1 className="center-align">Service request</h1>
+            <div className="col-12">
+                <h1 className="text-light">_</h1>
             </div>
-            <div className="" style={{display: 'flex',justifyContent:'space-between'}}>
-                <button className="waves-effect waves-orange btn "
+            <div className="col-12" style={{display: 'flex',justifyContent:'space-between'}}>
+                <button className="btn btn-secondary "
                     onClick={backHandler}
                 >
                     Back
                 </button>
-                <button className="waves-effect waves-green btn "
+                <button className="btn btn-secondary "
                     onClick={addHandler}
                 >
                     ADD request
                 </button>
             </div>
-            <div className="col s12 m4 l3 blue-grey lighten-4">
-                <h4 className="center-align">User card</h4>
+            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '40px'}}>
                 {user && <UserCard user={user}/>}
             </div>
-            <div className="col s12 m8 l9 blue-grey lighten-5">
-                <h4 className="center-align">List request</h4>
+            <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
+                <h4 className="">List request</h4>
 
                     {!loading && <ServicesList services={services}/>}
 

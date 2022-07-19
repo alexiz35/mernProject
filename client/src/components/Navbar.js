@@ -5,6 +5,8 @@ import {AuthContext} from "../context/AuthContext";
 export const Navbar = () => {
     const navigate = useNavigate()
     const auth = useContext(AuthContext)
+    const {page} = useContext(AuthContext)
+
     const logoutHandler = (event) => {
         event.preventDefault()
         auth.logout()
@@ -15,7 +17,7 @@ export const Navbar = () => {
 
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <div className="container-fluid">
-                {/*<span className="navbar-brand">Logo</span>*/}
+                <span className="navbar-brand">{page}</span>
                 <button className="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"/>
@@ -29,13 +31,13 @@ export const Navbar = () => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link " to="/links">
-                                Links
+                            <NavLink className="nav-link " to="/admin">
+                                Users
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link " href="/" onClick={logoutHandler}>
-                                OUT
+                                 LOG OUT
                             </a>
                         </li>
                     </ul>

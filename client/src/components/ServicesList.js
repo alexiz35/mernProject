@@ -7,8 +7,8 @@ export const ServicesList = ({services: services}) => {
     }
 
     return (
-        <div className="">
-            <table>
+        <div className="table-responsive">
+            <table className="table table-dark table-hover">
                 <thead>
                 <tr>
                     <th>№</th>
@@ -29,9 +29,9 @@ export const ServicesList = ({services: services}) => {
                             <td>{service.service}</td>
                             <td>{service.cost}</td>
                             <td>{new Date(service.date).toLocaleDateString()}</td>
-                            <td>
+                           {/* <td>
                                 {<Link to={`/detail/${service._id}`}>Open</Link>}
-                            </td>
+                            </td>*/}
                         </tr>
                     )
                 })}

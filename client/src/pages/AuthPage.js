@@ -46,8 +46,8 @@ export const AuthPage = () => {
     }
 
     return (
-        <div className={"row"}>
-            <div className={"col-6 offset-3"}>
+        <div className="row" style={{marginTop: '100px'}}>
+            <div className="col-6 offset-3 ">
                 <h1>Auth page</h1>
                 <div className="form-floating mb-3">
                     <input

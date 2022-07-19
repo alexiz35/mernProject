@@ -5,7 +5,7 @@ export function UserCard(props) {
 
     return (
 
-        <div className="card text-dark bg-light" style={{width:"250px"}}>
+        <div className="card text-dark bg-light" /*style={{width:"250px"}}*/>
 
             <div className="card-header ">
                 <h5 className="text-center">User card</h5>

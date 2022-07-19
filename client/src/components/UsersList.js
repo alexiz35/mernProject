@@ -15,9 +15,9 @@ export function UsersList(props) {
     }
 
     return (
-        <div className="table-responsive">
-            <table className="table table-hover">
-                <thead>
+        <div className="table-responsive" >
+            <table className="table table-dark table-hover">
+                <thead className=""  >
                 <tr>
                     <th>№</th>
                     <th>First Name</th>
@@ -26,7 +26,7 @@ export function UsersList(props) {
                     <th>Email</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style={{overflowY: 'scroll', maxHeight: '200px'}}>
                 {props.users.map((user, index) => {
                     return (
 
