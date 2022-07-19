@@ -21,6 +21,43 @@ export const AdminPage = () => {
         setUser(userFiltered[0])
     }
 
+    const searchUserHandler = (e) => {
+        let search = e.target.value
+        let arrEmail = []
+        users.map((item) => {
+            let itemEmail = item.email
+            /*    console.log('1', itemEmail)
+                console.log('2', item.email)*/
+
+            if (itemEmail.includes(search)) {
+                //arrEmail.push(item.email)
+
+                arrEmail.push(users.filter(value =>  { return value.email === itemEmail}))
+
+                /*console.log('if', arrEmail)*/
+            }
+        })
+
+        console.log('users1:',arrEmail)
+        /*const userFiltered = users.filter((value => value.email === getId))*/
+        setUsers(arrEmail)
+        console.log('users2:',users)
+    }
+
+    /* searchUser(arrEmail,e.target.value);*/
+
+
+    const searchUser = (user, search) => {
+        let result = []
+        user.forEach((item) => {
+            if (search.includes(item)) {
+                return result.push(item)
+            }
+            return result
+        })
+        console.log('res', result)
+    }
+
     const clickCardHandler = () => {
         navigate('/links')
     }
@@ -31,6 +68,7 @@ export const AdminPage = () => {
                 Authorization: `Bearer ${token}`
             })
             setUsers(fetched)
+            console.log('users:', users)
         } catch (e) {
         }
     }, [token, request])
@@ -50,7 +88,8 @@ export const AdminPage = () => {
         <div className="row">
 
             <div className=" col-9 d-flex " style={{marginTop: '50px'}}>
-                <input className="form-control " type="search" placeholder="Поиск" aria-label="Поиск"/>
+                <input className="form-control " type="search" placeholder="Поиск" aria-label="Поиск"
+                       onChange={searchUserHandler}/>
                 <button className="btn btn-secondary" type="submit">Поиск</button>
             </div>
 
@@ -63,15 +102,8 @@ export const AdminPage = () => {
 
             <div className=" col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '75px'}}>
 
-                <UserCard user={user || undefined}/>
-                <div className="row justify-content-center">
-                    <div className=" ">
-                        <button className="col-12 btn btn-secondary" onClick={clickCardHandler}>
-                            Open
-                        </button>
+                <UserCard user={user || undefined} clickButton={clickCardHandler}/>
 
-                    </div>
-                </div>
             </div>
 
         </div>

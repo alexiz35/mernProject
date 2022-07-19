@@ -29,12 +29,14 @@ export const UserCard = (props) => {
                         <p>Email: {user.email}</p>
                     </li>
                 </ul>
-                {/*
 
-            <p>First Name: <a href={user.firstName} target="_blank" rel="noopener noreferrer">{user.to}</a></p>
-            <p>Last Name: <a href={user.lastName} target="_blank" rel="noopener noreferrer">{user.from}</a></p>
-            <p>Phone: <strong>{user.phone}</strong></p>
-            <p>Email: <strong>{new Date(user.date).toLocaleDateString()}</strong></p>*/}
+            </div>
+            <div className="row justify-content-center">
+                <div className=" ">
+                    <button className="col-12 btn btn-secondary" onClick={()=>props.clickButton()} >
+                        Open
+                    </button>
+                </div>
             </div>
 
         </div>

@@ -4,6 +4,7 @@ import {AuthContext} from "../context/AuthContext";
 
 export function UsersList(props) {
     const {getId, setGetId} = useContext(AuthContext)
+    console.log('table',props)
 
     if (!props.users.length) {
         return <p className="center">No services</p>
