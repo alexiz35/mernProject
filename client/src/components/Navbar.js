@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext";
 
-export const Navbar = () => {
+export const Navbar = (props) => {
     const navigate = useNavigate()
     const auth = useContext(AuthContext)
     const {page} = useContext(AuthContext)
@@ -26,14 +26,18 @@ export const Navbar = () => {
 
                     <ul className="navbar-nav ">
                         <li className="nav-item">
-                            <NavLink className="nav-link " aria-current="create" to="/create">
-                                Create
-                            </NavLink>
+                            {props.admin &&
+                                <NavLink className="nav-link " aria-current="create" to="/create">
+                                    Create
+                                </NavLink>
+                            }
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link " to="/admin">
-                                Users
-                            </NavLink>
+                            {props.admin &&
+                                <NavLink className="nav-link " to="/admin">
+                                    Users
+                                </NavLink>
+                            }
                         </li>
                         <li className="nav-item">
                             <a className="nav-link " href="/" onClick={logoutHandler}>

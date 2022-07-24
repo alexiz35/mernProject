@@ -5,32 +5,33 @@ import {Loader} from "../components/Loader";
 import {ServicesList} from "../components/ServicesList";
 import {UserCard} from "../components/UserCard";
 import {useNavigate} from "react-router";
-import Modal from "bootstrap/js/src/modal";
 import {ModalEditUser} from "../components/ModalEditUser";
+import Modal from "bootstrap/js/src/modal";
 
-export const ServicesPage = () => {
+export const UserPage = () => {
     const navigate = useNavigate()
     const [services, setServices] = useState([])
     const {loading, request} = useHttp()
-    const {token, getId, setGetId, user, setUser, setPage} = useContext(AuthContext)
+    const {token,userId,setGetId,user,setUser,setPage} = useContext(AuthContext)
 
 
-    const addHandler = () => {
+
+/*    const addHandler = () => {
         navigate('/create')
     }
 
     const backHandler = () => {
         navigate('/admin')
-    }
+    }*/
 
-    const clickEditHandler = () => {
+    const editUserHandler = () => {
         let myModal = new Modal(document.getElementById('staticBackdrop'),)
         myModal.show()
     }
 
     const fetchservices = useCallback(async () => {
         try {
-            const fetched = await request('/api/service', 'POST', {userSelect: user}, {
+            const fetched = await request('/api/service', 'POST', {userSelect: userId}, {
                 Authorization: `Bearer ${token}`
             })
             setServices(fetched)
@@ -38,11 +39,24 @@ export const ServicesPage = () => {
         }
     }, [token, request])
 
+    const fetchUser = useCallback(async () => {
+        try {
+            const data = await request(`/api/user/${userId}`,'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            setUser(data)
+           // navigate(`/detail/${data.service._id}`)
+        } catch (e) {
+        }
+
+    },[token,request])
+
     useEffect(() => {
+        fetchUser()
         fetchservices()
         setPage('Service request')
 
-    }, [fetchservices])
+    }, [fetchservices,fetchUser])
 
     if (loading) {
         return <Loader/>
@@ -53,34 +67,37 @@ export const ServicesPage = () => {
         <div className="row">
 
 
-            <div className="col-12">
+          {/*  <div className="col-12">
                 <h1 className="text-light">_</h1>
             </div>
-            {/*<button className="btn btn-secondary "
-                    onClick={backHandler}
+            <div className="col-12" style={{display: 'flex',justifyContent:'space-between'}}>
+                <button className="btn btn-secondary "
+                        onClick={backHandler}
                 >
                     Back
-                </button>*/}
-
+                </button>
+                <button className="btn btn-secondary "
+                        onClick={addHandler}
+                >
+                    ADD request
+                </button>
+            </div>*/}
 
             <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '40px'}}>
-                <UserCard user={user || undefined} button={'Edit'} clickButton={clickEditHandler}/>
-
+                <UserCard user={user || undefined} button={'Edit'} clickButton={editUserHandler}/>
             </div>
             <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
                 <div className="  col-9 d-flex " style={{marginTop: '50px'}}>
-                    <input className="form-control " id="inputSearch" type="search" placeholder="Search by email"
-                           aria-label="search"
+                    <input className="form-control " id="inputSearch" type="search" placeholder="Search by email" aria-label="search"
                     />
                 </div>
                 <h4 className="">List request</h4>
 
-                {!loading && <ServicesList services={services} clickAdd={addHandler}/>}
+                {!loading && <ServicesList services={services}/>}
 
             </div>
 
             <ModalEditUser/>
-
         </div>
     )
 }

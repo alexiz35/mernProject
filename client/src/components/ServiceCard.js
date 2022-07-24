@@ -1,15 +1,48 @@
 import React from "react";
 
-export const ServiceCard = ({link}) => {
+export const ServiceCard = ({service,user}) => {
+    console.log(service)
+
     return (
         <>
 
-            <h2>Link</h2>
+            <div className="card-header ">
+                <h5 className="text-center">Service card</h5>
+            </div>
+            <div className="card-title">
+                <h6 className="text-center">{`${new Date(service.date).toLocaleDateString()} (client: ${user.firstName} ${user.lastName})`} </h6>
+            </div>
+            <div className="card-text">
+                <ul className="  list-group list-group-flush">
+                    <li className="list-group-item ">
+                        <p>Device: {service.device}</p>
+                    </li>
+                    <li className="list-group-item">
+                        <p>Claim: {service.claim}</p>
+                    </li>
+                    <li className="list-group-item">
+                        <p>Service: {service.service}</p>
+                    </li>
+                    <li className="list-group-item">
+                        <p>Cost: {service.cost}</p>
+                    </li>
+                </ul>
 
-            <p>Your Link: <a href={link.to} target="_blank" rel="noopener noreferrer">{link.to}</a></p>
-            <p>Path Link: <a href={link.from} target="_blank" rel="noopener noreferrer">{link.from}</a></p>
-            <p>Count click: <strong>{link.clicks}</strong></p>
-            <p>Create date: <strong>{new Date(link.date).toLocaleDateString()}</strong></p>
+            </div>
         </>
     )
+}
+
+ServiceCard.defaultProps = {
+    service: {
+        device: '-------------',
+        claim: '-------------',
+        service: '-------------',
+        cost: '-------------',
+        date: '-------------'
+    },
+    user : {
+        firstName: '-------------',
+        lastName: '-------------'
+    }
 }

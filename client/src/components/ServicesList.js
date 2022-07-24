@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom"
 
-export const ServicesList = ({services: services}) => {
+export const ServicesList = ({services: services,clickAdd}) => {
     if (!services.length) {
         return <p className="center">No services</p>
     }
@@ -17,6 +17,7 @@ export const ServicesList = ({services: services}) => {
                     <th>Service</th>
                     <th>Cost</th>
                     <th>Date</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,12 +30,21 @@ export const ServicesList = ({services: services}) => {
                             <td>{service.service}</td>
                             <td>{service.cost}</td>
                             <td>{new Date(service.date).toLocaleDateString()}</td>
-                           {/* <td>
-                                {<Link to={`/detail/${service._id}`}>Open</Link>}
-                            </td>*/}
+                            <td>
+                                {<Link to={`/detail/${service._id}`}>
+                                    <button className="btn btn-outline-secondary">Detail</button>
+                                </Link>}
+                            </td>
                         </tr>
                     )
                 })}
+                <tr>
+                    <td colSpan="7">
+                        <div className="d-flex justify-content-center ">
+                            <button className="w-100 btn btn-dark" onClick={()=>{clickAdd()}}>+</button>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>

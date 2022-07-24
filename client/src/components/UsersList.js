@@ -23,7 +23,7 @@ export function UsersList(props) {
                     <thead  >
                 <tr >
                     <th>№</th>
-                    <th onClick={(e)=>props.clickField(e)} id="firstName">First Name</th>
+                    <th onClick={(e)=>props.clickField(e)} id="firstName" >First Name</th>
                     <th onClick={(e)=>props.clickField(e)} id="lastName">Last Name</th>
                     <th onClick={(e)=>props.clickField(e)} id="phone">Phone</th>
                     <th onClick={(e)=>props.clickField(e)} id="email">Email</th>

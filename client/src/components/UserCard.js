@@ -2,7 +2,7 @@ import React from "react";
 
 export const UserCard = (props) => {
 
-    const {user} = props
+    const {user,button} = props
 
     return (
 
@@ -33,8 +33,8 @@ export const UserCard = (props) => {
             </div>
             <div className="row justify-content-center">
                 <div className=" ">
-                    <button className="col-12 btn btn-secondary" onClick={()=>props.clickButton()} >
-                        Open
+                    <button className="col-12 btn btn-secondary" onClick={()=>props.clickButton()} disabled={!button}>
+                        {button}
                     </button>
                 </div>
             </div>

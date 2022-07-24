@@ -6,33 +6,44 @@ import {Loader} from "../components/Loader";
 import {ServiceCard} from "../components/ServiceCard";
 
 export const DetailPage = () => {
-    const {token} = useContext(AuthContext)
+    const {token,getId,users} = useContext(AuthContext)
     const {request, loading} = useHttp()
-    const [link,setLink] = useState(null)
-    const linkId = useParams().id
+    const [service,setService] = useState(null)
+    const [user,setUser] = useState(null)
+    const serviceId = useParams().id
+    console.log('det',users)
 
-    const getLink = useCallback( async () => {
+
+    const getService = useCallback( async () => {
         try {
-           const fetched = await request(`/api/link/${linkId}`, 'GET', null, {
+           const fetched = await request(`/api/service/${serviceId}`, 'GET', null, {
               Authorization: `Bearer ${token}`
            })
-            setLink(fetched)
+           const getUsername = await request(`/api/user/${fetched.owner}`,'GET',null, {
+               Authorization: `Bearer ${token}`
+           })
+            console.log('detail',service)
+            setService (fetched)
+            setUser(getUsername)
         } catch (e) {
             
         }
-    },[token, linkId, request])
+    },[token, serviceId, request])
 
     useEffect( () => {
-        getLink()
-    },[getLink])
+        getService()
+    },[getService])
 
     if (loading) {
         return <Loader/>
     }
 
     return (
-        <>
-            {!loading && link && <ServiceCard link={link}/>}
-        </>
+        <div className="row justify-content-center" >
+            <div className="col-12 col-md-8 col-lg-8 col-xl-8">
+            {!loading && <ServiceCard service={service  || undefined} user = {user || undefined}/>}
+
+        </div>
+        </div>
     )
 }

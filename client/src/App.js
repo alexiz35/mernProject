@@ -10,13 +10,12 @@ import "bootstrap"
 
 
 function App() {
-    const {token,login,logout,userId,ready} = useAuth()
+    const {token,login,logout,userId,ready,admin} = useAuth()
     const isAuthenticated = !!token
-    const admin = false;
-    const routes = useRoutes(isAuthenticated)
     const [getId,setGetId] = useState(null)
     const [user,setUser] = useState(null)
     const [page, setPage] = useState('')
+    const routes = useRoutes(isAuthenticated,admin)
 
 
 
@@ -29,7 +28,7 @@ function App() {
             token,login,logout, userId, isAuthenticated, admin, getId, setGetId, user, setUser, page, setPage
         }}>
         <Router>
-            {isAuthenticated && <Navbar/>}
+            {isAuthenticated && <Navbar admin={admin}/>}
             <div className="container" >
                 {routes}
             </div>

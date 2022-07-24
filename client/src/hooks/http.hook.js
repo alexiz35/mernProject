@@ -17,12 +17,14 @@ export const useHttp = () => {
             if (!response.ok) {
                 throw new Error(data.message || 'Error useHttp')
             }
+            console.log(data.message)
             setLoading(false)
             return data
 
         } catch (e) {
             setLoading(false)
             setError(e.message)
+            console.log(e.message)
             throw e
         }
     }, [])

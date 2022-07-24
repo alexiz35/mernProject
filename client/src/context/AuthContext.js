@@ -12,6 +12,8 @@ export const AuthContext = createContext({
     getId: null,
     setGetId: noop(),
     page: null,
-    setPage: noop()
+    setPage: noop(),
+    admin: false,
+    setAdmin: noop()
 
 })

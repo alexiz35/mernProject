@@ -8,27 +8,17 @@ const router = Router()
 
 router.post('/generate', auth, async (req, res) => {
     try {
-        const baseUrl = config.get('baseUrl')
-        const {from} = req.body
+        const {form,user} = req.body
 
-        const code = shortid.generate()
-
-        const existing = await Link.findOne({from})
-
-        if (existing) {
-            return res.json({link: existing})
-        }
-
-        const to = baseUrl + '/t/' + code
-
-        const link = new Link({
-            code, to, from, owner: req.user.userId
+        const service = new Service({
+            device: form.device, claim: form.claim, service: form.service, cost:form.cost, owner: user._id
         })
 
-        await link.save()
-        res.status(201).json({link})
+        await service.save()
+        res.status(201).json({service})
 
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Error, try again'})
     }
 })
@@ -36,7 +26,6 @@ router.post('/generate', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     try {
         const {userSelect} = req.body
-        /*const services = await Service.find({owner: req.user.userId})*/
         const services = await Service.find({owner: userSelect._id})
         res.json(services)
     } catch (e) {
@@ -46,7 +35,7 @@ router.post('/', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
     try {
-        const service = await User.findById(req.params.id)
+        const service = await Service.findById(req.params.id)
         res.json(service)
     } catch (e) {
         res.status(500).json({message: 'Error, try again'})
