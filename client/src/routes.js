@@ -25,6 +25,7 @@ export const useRoutes = (isAuthenticated,admin) => {
             return (
                 <Routes>
                     <Route path='/user' element={<UserPage/>}/>
+                    <Route path='/detail/:id' element={<DetailPage/>}/>
                     <Route path='/access' element={<AccessDenied/>}/>
                     <Route path = "/" element={<AuthPage />}/>
                     <Route path="*" element={<Navigate replace to="/access" />} />

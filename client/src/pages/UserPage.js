@@ -4,59 +4,76 @@ import {AuthContext} from "../context/AuthContext";
 import {Loader} from "../components/Loader";
 import {ServicesList} from "../components/ServicesList";
 import {UserCard} from "../components/UserCard";
-import {useNavigate} from "react-router";
-import {ModalEditUser} from "../components/ModalEditUser";
-import Modal from "bootstrap/js/src/modal";
+import {editUserHandler, ModalEditUser} from "../components/ModalEditUser";
+import {filterTable, getFieldId} from "../components/Function";
 
 export const UserPage = () => {
-    const navigate = useNavigate()
     const [services, setServices] = useState([])
+    const [fieldSearch, setFieldSearch] = useState('device')
+    const [tempServices, setTempServices] = useState([])
+    const [modalOk, setModalOk] = useState(false)
     const {loading, request} = useHttp()
-    const {token,userId,setGetId,user,setUser,setPage} = useContext(AuthContext)
+    const {token, userId, user, setUser, setPage} = useContext(AuthContext)
 
 
+    const addHandler = () => {
 
-/*    const addHandler = () => {
-        navigate('/create')
     }
 
-    const backHandler = () => {
-        navigate('/admin')
-    }*/
-
-    const editUserHandler = () => {
-        let myModal = new Modal(document.getElementById('staticBackdrop'),)
-        myModal.show()
+    const getField = (e) => {
+        setFieldSearch(getFieldId(e))
     }
 
-    const fetchservices = useCallback(async () => {
+    const searchServiceHandler = (e) => {
+        const search = e.target.value
+        if (search === '') {
+            return setTempServices(services)
+        }
+        setTempServices(filterTable(services, search, fieldSearch))
+    }
+
+
+    const sendHandler = async (form) => {
+        try {
+            await request('/api/user/edit', 'POST', {...form, userId}, {
+                Authorization: `Bearer ${token}`
+            })
+            setModalOk(true)
+        } catch (e) {
+
+        }
+    }
+
+    const fetchServices = useCallback(async () => {
         try {
             const fetched = await request('/api/service', 'POST', {userSelect: userId}, {
                 Authorization: `Bearer ${token}`
             })
             setServices(fetched)
+            setTempServices(fetched)
         } catch (e) {
+
         }
     }, [token, request])
 
     const fetchUser = useCallback(async () => {
         try {
-            const data = await request(`/api/user/${userId}`,'GET', null, {
+            const data = await request(`/api/user/${userId}`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
             setUser(data)
-           // navigate(`/detail/${data.service._id}`)
+            setModalOk(false)
         } catch (e) {
         }
 
-    },[token,request])
+    }, [token, request])
 
     useEffect(() => {
         fetchUser()
-        fetchservices()
+        fetchServices()
         setPage('Service request')
+    }, [fetchServices, fetchUser, modalOk])
 
-    }, [fetchservices,fetchUser])
 
     if (loading) {
         return <Loader/>
@@ -64,40 +81,40 @@ export const UserPage = () => {
 
 
     return (
-        <div className="row">
+        <div className="row mt-5">
 
-
-          {/*  <div className="col-12">
-                <h1 className="text-light">_</h1>
-            </div>
-            <div className="col-12" style={{display: 'flex',justifyContent:'space-between'}}>
-                <button className="btn btn-secondary "
-                        onClick={backHandler}
-                >
-                    Back
-                </button>
-                <button className="btn btn-secondary "
-                        onClick={addHandler}
-                >
-                    ADD request
-                </button>
-            </div>*/}
-
-            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '40px'}}>
-                <UserCard user={user || undefined} button={'Edit'} clickButton={editUserHandler}/>
+            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center mt-5">
+                <UserCard
+                    user={user || undefined}
+                    button={'Edit'}
+                    clickButton={editUserHandler}
+                />
             </div>
             <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
-                <div className="  col-9 d-flex " style={{marginTop: '50px'}}>
-                    <input className="form-control " id="inputSearch" type="search" placeholder="Search by email" aria-label="search"
+                <div className="  col-9 d-flex mt-5">
+                    <input
+                        className="form-control "
+                        id="inputSearch"
+                        type="search"
+                        placeholder="Search by email"
+                        aria-label="search"
+                        onChange={searchServiceHandler}
                     />
                 </div>
                 <h4 className="">List request</h4>
 
-                {!loading && <ServicesList services={services}/>}
+                {!loading && <ServicesList
+                    services={tempServices}
+                    clickAdd={addHandler}
+                    clickField={getField}
+                />}
 
             </div>
 
-            <ModalEditUser/>
+            <ModalEditUser
+                userField={user || undefined}
+                clickEdit={sendHandler}
+            />
         </div>
     )
 }

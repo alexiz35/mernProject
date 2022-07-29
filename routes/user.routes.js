@@ -1,37 +1,34 @@
 const {Router} = require('express')
-const config = require('config')
-const shortid = require('shortid')
-const Link = require('../models/Link')
 const User = require('../models/User')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-router.post('/generate', auth, async (req, res) => {
-    try {
-        const baseUrl = config.get('baseUrl')
-        const {from} = req.body
+//***************************************************************************
+// edit user , return update user  (/api/user/edit)
+//***************************************************************************
 
-        const code = shortid.generate()
+router.post(
+    '/edit',
+    auth,
 
-        const existing = await Link.findOne({from})
+    async (req, res) => {
+        try {
 
-        if (existing) {
-            return res.json({link: existing})
+            const {firstName, lastName, phone, userId} = req.body
+            const user = await User.findByIdAndUpdate(
+                userId,
+                {firstName: firstName, lastName: lastName, phone: phone},
+                {returnDocument: "after"}
+            )
+            res.status(201).json({user})
+        } catch (e) {
+            res.status(500).json({message: 'Error, try again'})
         }
+    })
 
-        const to = baseUrl + '/t/' + code
-
-        const link = new Link({
-            code, to, from, owner: req.user.userId
-        })
-
-        await link.save()
-        res.status(201).json({link})
-
-    } catch (e) {
-        res.status(500).json({message: 'Error, try again'})
-    }
-})
+//***************************************************************************
+// get all list users   (/api/user)
+//***************************************************************************
 
 router.get('/', auth, async (req, res) => {
     try {
@@ -41,6 +38,10 @@ router.get('/', auth, async (req, res) => {
         res.status(500).json({message: 'Error, try again'})
     }
 })
+
+//***************************************************************************
+// get  user by Id  (/api/user/:id)
+//***************************************************************************
 
 router.get('/:id', auth, async (req, res) => {
     try {

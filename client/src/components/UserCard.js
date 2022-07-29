@@ -3,7 +3,6 @@ import React from "react";
 export const UserCard = (props) => {
 
     const {user,button} = props
-
     return (
 
         <div className="card text-dark bg-light" >

@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
@@ -8,7 +8,6 @@ export const CreatePage = () => {
     const navigate = useNavigate()
     const {user,setPage,token} = useContext(AuthContext)
     const {request} = useHttp()
-    const [link, setLink] = useState('')
     const [form,setForm] = useState({
         device:'',claim:'', service:'', cost: null
     })
@@ -21,7 +20,6 @@ export const CreatePage = () => {
     const pressHandler = async () => {
         /*if (event.key === 'Enter') {*/
             try {
-                console.log('try')
                 const data = await request('/api/service/generate','POST', {form,user}, {
                     Authorization: `Bearer ${token}`
                 })

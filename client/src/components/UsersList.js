@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
-import {click} from "@testing-library/user-event/dist/click";
 
 export function UsersList(props) {
     const {getId, setGetId} = useContext(AuthContext)
@@ -18,18 +17,18 @@ export function UsersList(props) {
 
     return (
         <div className="table-responsive" style={{overflowY: 'auto', maxHeight: '450px'}}>
-            <table className="table table-dark table-hover"  >
+            <table className="table table-dark table-hover">
 
-                    <thead  >
-                <tr >
+                <thead>
+                <tr>
                     <th>№</th>
-                    <th onClick={(e)=>props.clickField(e)} id="firstName" >First Name</th>
-                    <th onClick={(e)=>props.clickField(e)} id="lastName">Last Name</th>
-                    <th onClick={(e)=>props.clickField(e)} id="phone">Phone</th>
-                    <th onClick={(e)=>props.clickField(e)} id="email">Email</th>
+                    <th onClick={(e) => props.clickField(e)} id="firstName">First Name</th>
+                    <th onClick={(e) => props.clickField(e)} id="lastName">Last Name</th>
+                    <th onClick={(e) => props.clickField(e)} id="phone">Phone</th>
+                    <th onClick={(e) => props.clickField(e)} id="email">Email</th>
                 </tr>
                 </thead>
-                <tbody >
+                <tbody>
                 {props.users.map((user, index) => {
                     return (
 

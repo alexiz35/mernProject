@@ -1,7 +1,6 @@
 import React from "react";
 
 export const ServiceCard = ({service,user}) => {
-    console.log(service)
 
     return (
         <>

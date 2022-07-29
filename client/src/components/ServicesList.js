@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom"
 
-export const ServicesList = ({services: services,clickAdd}) => {
+export const ServicesList = ({services: services, clickAdd, clickField}) => {
     if (!services.length) {
         return <p className="center">No services</p>
     }
@@ -12,11 +12,11 @@ export const ServicesList = ({services: services,clickAdd}) => {
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Device</th>
-                    <th>Claim</th>
-                    <th>Service</th>
-                    <th>Cost</th>
-                    <th>Date</th>
+                    <th onClick={(e) => clickField(e)} id="device">Device</th>
+                    <th onClick={(e) => clickField(e)} id="claim">Claim</th>
+                    <th onClick={(e) => clickField(e)} id="service">Service</th>
+                    <th onClick={(e) => clickField(e)} id="cost">Cost</th>
+                    <th onClick={(e) => clickField(e)} id="date">Date</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -41,7 +41,10 @@ export const ServicesList = ({services: services,clickAdd}) => {
                 <tr>
                     <td colSpan="7">
                         <div className="d-flex justify-content-center ">
-                            <button className="w-100 btn btn-dark" onClick={()=>{clickAdd()}}>+</button>
+                            <button className="w-100 btn btn-dark" onClick={() => {
+                                clickAdd()
+                            }}>+
+                            </button>
                         </div>
                     </td>
                 </tr>

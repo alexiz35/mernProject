@@ -1,4 +1,4 @@
-const {Schema,model,Types} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
     device: {type: String, required: true},
@@ -6,7 +6,8 @@ const schema = new Schema({
     service: {type: String, required: true},
     cost: {type: String, required: true},
     date: {type: Date, default: Date.now},
-    owner: {type: Types.ObjectId, ref: 'User'}
+    owner: {type: Types.ObjectId, ref: 'User'},
+    status: {type: String}
 })
 
 module.exports = model('Service', schema)

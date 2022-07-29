@@ -15,7 +15,7 @@ export const Navbar = (props) => {
 
     return (
 
-        <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div className="container-fluid">
                 <span className="navbar-brand">{page}</span>
                 <button className="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -27,21 +27,21 @@ export const Navbar = (props) => {
                     <ul className="navbar-nav ">
                         <li className="nav-item">
                             {props.admin &&
-                                <NavLink className="nav-link " aria-current="create" to="/create">
-                                    Create
-                                </NavLink>
+                            <NavLink className="nav-link " aria-current="create" to="/create">
+                                Create
+                            </NavLink>
                             }
                         </li>
                         <li className="nav-item">
                             {props.admin &&
-                                <NavLink className="nav-link " to="/admin">
-                                    Users
-                                </NavLink>
+                            <NavLink className="nav-link " to="/admin">
+                                Users
+                            </NavLink>
                             }
                         </li>
                         <li className="nav-item">
                             <a className="nav-link " href="/" onClick={logoutHandler}>
-                                 LOG OUT
+                                LOG OUT
                             </a>
                         </li>
                     </ul>

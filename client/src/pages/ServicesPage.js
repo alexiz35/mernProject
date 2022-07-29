@@ -5,44 +5,69 @@ import {Loader} from "../components/Loader";
 import {ServicesList} from "../components/ServicesList";
 import {UserCard} from "../components/UserCard";
 import {useNavigate} from "react-router";
-import Modal from "bootstrap/js/src/modal";
-import {ModalEditUser} from "../components/ModalEditUser";
+import {editUserHandler, ModalEditUser} from "../components/ModalEditUser";
+import {filterTable, getFieldId} from "../components/Function";
 
 export const ServicesPage = () => {
     const navigate = useNavigate()
     const [services, setServices] = useState([])
+    const [fieldSearch, setFieldSearch] = useState('device')
+    const [tempServices, setTempServices] = useState([])
+    const [modalOk, setModalOk] = useState(false)
     const {loading, request} = useHttp()
-    const {token, getId, setGetId, user, setUser, setPage} = useContext(AuthContext)
+    const {token, user, setPage} = useContext(AuthContext)
 
 
     const addHandler = () => {
         navigate('/create')
     }
 
-    const backHandler = () => {
-        navigate('/admin')
+    /* const backHandler = () => {
+         navigate('/admin')
+     }*/
+
+    const getUserField = (e) => {
+
+        setFieldSearch(getFieldId(e))
     }
 
-    const clickEditHandler = () => {
-        let myModal = new Modal(document.getElementById('staticBackdrop'),)
-        myModal.show()
+    const searchServiceHandler = (e) => {
+        const search = e.target.value
+        if (search === '') {
+            return setTempServices(services)
+        }
+        setTempServices(filterTable(services, search, fieldSearch))
     }
 
-    const fetchservices = useCallback(async () => {
+
+    const sendHandler = async (form) => {
         try {
-            const fetched = await request('/api/service', 'POST', {userSelect: user}, {
+            await request('/api/user/edit', 'POST', {...form, userId: user._id}, {
+                Authorization: `Bearer ${token}`
+            })
+            setModalOk(true)
+        } catch (e) {
+
+        }
+    }
+
+    const fetchServices = useCallback(async () => {
+        try {
+            const fetched = await request('/api/service', 'POST', {userSelect: user._id}, {
                 Authorization: `Bearer ${token}`
             })
             setServices(fetched)
+            setTempServices(fetched)
+            setModalOk(false)
         } catch (e) {
         }
     }, [token, request])
 
     useEffect(() => {
-        fetchservices()
+        fetchServices()
         setPage('Service request')
 
-    }, [fetchservices])
+    }, [fetchServices, modalOk])
 
     if (loading) {
         return <Loader/>
@@ -50,36 +75,44 @@ export const ServicesPage = () => {
 
 
     return (
-        <div className="row">
+        <div className="row mt-5">
 
 
-            <div className="col-12">
-                <h1 className="text-light">_</h1>
-            </div>
-            {/*<button className="btn btn-secondary "
-                    onClick={backHandler}
-                >
-                    Back
-                </button>*/}
+            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center mt-5">
 
-
-            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center" style={{marginTop: '40px'}}>
-                <UserCard user={user || undefined} button={'Edit'} clickButton={clickEditHandler}/>
+                <UserCard
+                    user={user || undefined}
+                    button={'Edit'}
+                    clickButton={editUserHandler}
+                />
 
             </div>
             <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
-                <div className="  col-9 d-flex " style={{marginTop: '50px'}}>
-                    <input className="form-control " id="inputSearch" type="search" placeholder="Search by email"
-                           aria-label="search"
+                <div className="  col-9 d-flex mt-5">
+                    <input
+                        className="form-control "
+                        id="inputSearch"
+                        type="search"
+                        placeholder="Search by device"
+                        aria-label="search"
+                        onChange={searchServiceHandler}
                     />
                 </div>
                 <h4 className="">List request</h4>
 
-                {!loading && <ServicesList services={services} clickAdd={addHandler}/>}
+                {!loading &&
+                <ServicesList
+                    services={tempServices}
+                    clickAdd={addHandler}
+                    clickField={getUserField}
+                />}
 
             </div>
 
-            <ModalEditUser/>
+            <ModalEditUser
+                userField={user || undefined}
+                clickEdit={sendHandler}
+            />
 
         </div>
     )

@@ -19,7 +19,6 @@ export const useAuth = () => {
     },[])
 
     const logout = useCallback(() => {
-        console.log('logout')
         setToken(null)
         setUserId(null)
         setAdmin(null)

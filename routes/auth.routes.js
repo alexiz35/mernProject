@@ -7,7 +7,10 @@ const User = require('../models/User')
 
 const router = Router()
 
-//  /api/auth/register
+//***************************************************************************
+// user registration , check fields email and password  (/api/auth/register)
+//***************************************************************************
+
 router.post(
     '/register',
     [
@@ -45,7 +48,10 @@ router.post(
         }
     })
 
-//  /api/auth/login
+
+//***************************************************************************
+// user authentication , check fields email and password  (/api/auth/register)
+//***************************************************************************
 router.post(
     '/login',
     [
@@ -70,7 +76,7 @@ router.post(
                 return res.status(400).json({message: 'User do not find'})
             }
 
-            const adminState = (email==='admin@admin.com')
+            const adminState = (email === 'admin@admin.com')
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
