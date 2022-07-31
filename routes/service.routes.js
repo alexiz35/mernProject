@@ -13,7 +13,7 @@ router.post('/generate', auth, async (req, res) => {
         const {form, user} = req.body
 
         const service = new Service({
-            device: form.device, claim: form.claim, service: form.service, cost: form.cost, owner: user._id
+            device: form.device, claim: form.claim, service: form.service, cost: form.cost, owner: user._id, status: 'received'
         })
 
         await service.save()
@@ -50,5 +50,28 @@ router.get('/:id', auth, async (req, res) => {
         res.status(500).json({message: 'Error, try again'})
     }
 })
+
+//***************************************************************************
+// edit service:status , return update service  (/api/service/edit)
+//***************************************************************************
+
+router.post(
+    '/edit',
+    auth,
+
+    async (req, res) => {
+        try {
+
+            const {status, serviceId} = req.body
+            const service = await Service.findByIdAndUpdate(
+                serviceId,
+                {status: status},
+                {returnDocument: "after"}
+            )
+            res.status(201).json({service})
+        } catch (e) {
+            res.status(500).json({message: 'Error, try again'})
+        }
+    })
 
 module.exports = router

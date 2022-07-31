@@ -9,7 +9,7 @@ export const CreatePage = () => {
     const {user,setPage,token} = useContext(AuthContext)
     const {request} = useHttp()
     const [form,setForm] = useState({
-        device:'',claim:'', service:'', cost: null
+        device:'',claim:'', service:'', cost: ''
     })
 
 

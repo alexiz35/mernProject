@@ -14,16 +14,16 @@ export const ServiceCard = ({service,user}) => {
             <div className="card-text">
                 <ul className="  list-group list-group-flush">
                     <li className="list-group-item ">
-                        <p>Device: {service.device}</p>
+                        <p><b>Device:</b> <i>{service.device}</i></p>
                     </li>
                     <li className="list-group-item">
-                        <p>Claim: {service.claim}</p>
+                        <p><b>Claim:</b> <i>{service.claim}</i></p>
                     </li>
                     <li className="list-group-item">
-                        <p>Service: {service.service}</p>
+                        <p><b>Service:</b> <i>{service.service}</i></p>
                     </li>
                     <li className="list-group-item">
-                        <p>Cost: {service.cost}</p>
+                        <p><b>Cost:</b> <i>{service.cost}</i></p>
                     </li>
                 </ul>
 

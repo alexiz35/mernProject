@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {AuthContext} from "../context/AuthContext";
 
 export function UsersList(props) {
-    const {getId, setGetId} = useContext(AuthContext)
+    const {setGetId} = useContext(AuthContext)
 
     if (!props.users.length) {
         return <p className="center">No services</p>
@@ -16,7 +16,7 @@ export function UsersList(props) {
 
 
     return (
-        <div className="table-responsive" style={{overflowY: 'auto', maxHeight: '450px'}}>
+        <div className="table" style={{overflowY: 'auto', maxHeight: '450px'}}>
             <table className="table table-dark table-hover">
 
                 <thead>
@@ -38,10 +38,6 @@ export function UsersList(props) {
                             <td data-item={user._id}>{user.lastName}</td>
                             <td data-item={user._id}>{user.phone}</td>
                             <td data-item={user._id}>{user.email}</td>
-                            {/* <td>
-                            {<Link to={`/detail/${service._id}`}>Open</Link>}
-                        </td>*/}
-
                         </tr>
 
                     )

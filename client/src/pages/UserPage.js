@@ -83,14 +83,14 @@ export const UserPage = () => {
     return (
         <div className="row mt-5">
 
-            <div className="col-12 col-sm-4 col-md-4 col-lg-3 justify-content-center mt-5">
+            <div className="col-12 col-sm-12 col-md-4 col-lg-4 justify-content-center mt-5">
                 <UserCard
                     user={user || undefined}
                     button={'Edit'}
                     clickButton={editUserHandler}
                 />
             </div>
-            <div className="col-12 col-sm-8 col-md-8 col-lg-9 justify-content-center">
+            <div className="col-12 col-sm-12 col-md-8 col-lg-8 justify-content-center">
                 <div className="  col-9 d-flex mt-5">
                     <input
                         className="form-control "
@@ -105,6 +105,7 @@ export const UserPage = () => {
 
                 {!loading && <ServicesList
                     services={tempServices}
+                    enableStatus={true}
                     clickAdd={addHandler}
                     clickField={getField}
                 />}

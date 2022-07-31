@@ -42,8 +42,8 @@ export const DetailPage = () => {
     }
 
     return (
-        <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-8 col-xl-8">
+        <div className="row justify-content-center ">
+            <div className="col-12 col-md-8 col-lg-8 col-xl-8 mt-5">
                 {!loading && <ServiceCard
                     service={service || undefined}
                     user={user || undefined}

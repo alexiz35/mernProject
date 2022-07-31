@@ -13,6 +13,7 @@ export const ServicesPage = () => {
     const [services, setServices] = useState([])
     const [fieldSearch, setFieldSearch] = useState('device')
     const [tempServices, setTempServices] = useState([])
+    const [colorStatus, setColorStatus] = useState({color: 'white'})
     const [modalOk, setModalOk] = useState(false)
     const {loading, request} = useHttp()
     const {token, user, setPage} = useContext(AuthContext)
@@ -37,6 +38,56 @@ export const ServicesPage = () => {
             return setTempServices(services)
         }
         setTempServices(filterTable(services, search, fieldSearch))
+    }
+
+    /*const styleColor = (recStatus) => {
+        let style = {color: ''}
+        switch (recStatus) {
+            case "received": style.color = "red"
+                break
+            case "process": style.color = "yellow"
+                break
+            case "success": style.color = "green"
+                break
+            default: break
+        }
+        console.log('style',style)
+    }*/
+
+    const clickStatusHandler = async (e,id) => {
+        let status = ""
+        const targetCell = document.getElementById(id)
+        if (targetCell !== null) {
+            switch (e.target.id) {
+                case "received":
+                    targetCell.style.color = "red"
+                    status = "received"
+                    targetCell.textContent = "received"
+                    break
+                case "process":
+                    targetCell.style.color = "yellow";
+                    status = "process"
+                    targetCell.textContent = "process"
+                    break
+                case "success":
+                    targetCell.style.color = "green";
+                    status = "success"
+                    targetCell.textContent = "success"
+                    break
+                default:
+                    break
+            }
+            setColorStatus({color: targetCell.style.color})
+
+        }
+        try {
+            await request('/api/service/edit', 'POST', {serviceId: id,status}, {
+                Authorization: `Bearer ${token}`
+            })
+        } catch (e) {
+
+        }
+
     }
 
 
@@ -66,8 +117,7 @@ export const ServicesPage = () => {
     useEffect(() => {
         fetchServices()
         setPage('Service request')
-
-    }, [fetchServices, modalOk])
+    }, [fetchServices, modalOk,colorStatus])
 
     if (loading) {
         return <Loader/>
@@ -103,8 +153,10 @@ export const ServicesPage = () => {
                 {!loading &&
                 <ServicesList
                     services={tempServices}
+                    enableStatus={false}
                     clickAdd={addHandler}
                     clickField={getUserField}
+                    clickStatus={clickStatusHandler}
                 />}
 
             </div>
