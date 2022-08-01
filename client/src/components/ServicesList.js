@@ -24,8 +24,8 @@ export const ServicesList = ({services: services, enableStatus, clickAdd, clickF
 
 
     return (
-        <div className="table">
-            <table className="table table-dark table-hover">
+            <div className="table-responsive-lg" style={{overflowY: 'auto', maxHeight: '450px'}}>
+            <table className="table table-dark table-hover" >
                 <thead>
                 <tr>
                     <th>№</th>
@@ -113,6 +113,6 @@ export const ServicesList = ({services: services, enableStatus, clickAdd, clickF
                 </tr>
                 </tbody>
             </table>
-        </div>
+            </div>
     )
 }

@@ -42,8 +42,8 @@ export const AuthPage = () => {
     }
 
     return (
-        <div className="row" style={{marginTop: '100px'}}>
-            <div className="col-6 offset-3 ">
+        <div className="row d-flex justify-content-center" style={{marginTop: '100px'}}>
+            <div className="col-7 ">
                 <h1>Auth page</h1>
                 <div className="form-floating mb-3">
                     <input
@@ -69,9 +69,9 @@ export const AuthPage = () => {
                     />
                     <label htmlFor="password">Password</label>
                 </div>
-                <div className="mt-3">
+                <div className="mt-4" >
                     <button
-                        className="btn-dark btn me-3"
+                        className="btn-dark btn me-3 col-12"
                         /*style={{marginRight: 10}}*/
                         disabled={loading}
                         onClick={loginHandler}
@@ -79,7 +79,7 @@ export const AuthPage = () => {
                         Login
                     </button>
                     <button
-                        className={"btn-dark btn me-3"}
+                        className={"btn-dark btn me-3 col-12 mt-3"}
                         onClick={registerHandler}
                         disabled={loading}
                     >
@@ -87,6 +87,7 @@ export const AuthPage = () => {
                     </button>
                 </div>
             </div>
+
         </div>
     )
 }

@@ -29,7 +29,7 @@ function App() {
         }}>
         <Router>
             {isAuthenticated && <Navbar admin={admin}/>}
-            <div className="container" >
+            <div className="container-fluid" >
                 {routes}
             </div>
         </Router>

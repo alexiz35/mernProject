@@ -6,10 +6,10 @@ import {UserCard} from "../components/UserCard";
 
 export const CreatePage = () => {
     const navigate = useNavigate()
-    const {user,setPage,token} = useContext(AuthContext)
+    const {user, setPage, token} = useContext(AuthContext)
     const {request} = useHttp()
-    const [form,setForm] = useState({
-        device:'',claim:'', service:'', cost: ''
+    const [form, setForm] = useState({
+        device: '', claim: '', service: '', cost: ''
     })
 
 
@@ -19,13 +19,13 @@ export const CreatePage = () => {
 
     const pressHandler = async () => {
         /*if (event.key === 'Enter') {*/
-            try {
-                const data = await request('/api/service/generate','POST', {form,user}, {
-                    Authorization: `Bearer ${token}`
-                })
-                navigate(`/detail/${data.service._id}`)
-            } catch (e) {
-            }
+        try {
+            const data = await request('/api/service/generate', 'POST', {form, user}, {
+                Authorization: `Bearer ${token}`
+            })
+            navigate(`/detail/${data.service._id}`)
+        } catch (e) {
+        }
 
     }
 
@@ -34,16 +34,17 @@ export const CreatePage = () => {
     }, [])
 
     return (
-        <div className="row">
+        <div className="row mt-3">
             <div className="col s12 center-align">
                 <h1>Create request</h1>
             </div>
             <div className="row">
-                <div className="col-12 col-md-4 ">
-                    <h4 className="center-align">User card</h4>
+
+                <div className="col-12 col-md-4 mt-5">
                     {user && <UserCard user={user}/>}
                 </div>
-                <div className="col-12 col-md-6" style={{paddingTop: '2rem'}}>
+
+                <div className="col-12 col-md-6 mt-5">
                     <div className="form-floating mb-3">
                         <input
                             placeholder="Input Device"
@@ -56,7 +57,7 @@ export const CreatePage = () => {
                         />
                         <label htmlFor="device">Input Device</label>
                     </div>
-                    <div className="form-floating mb-3" >
+                    <div className="form-floating mb-3">
                         <input
                             placeholder="Input Claim"
                             id="claim"
@@ -68,7 +69,7 @@ export const CreatePage = () => {
                         />
                         <label htmlFor="claim">Input Claim</label>
                     </div>
-                    <div className="form-floating mb-3" >
+                    <div className="form-floating mb-3">
                         <input
                             placeholder="Input Service"
                             id="service"
@@ -80,7 +81,7 @@ export const CreatePage = () => {
                         />
                         <label htmlFor="service">Input Service</label>
                     </div>
-                    <div className="form-floating mb-3"  >
+                    <div className="form-floating mb-3">
                         <input
                             placeholder="Input Cost"
                             id="cost"
@@ -92,7 +93,7 @@ export const CreatePage = () => {
                         />
                         <label htmlFor="cost">Input Cost</label>
                     </div>
-                    <button className="btn-lg btn-dark" onClick={pressHandler} >
+                    <button className="btn-lg btn-dark" onClick={pressHandler}>
                         Submit
                     </button>
                 </div>

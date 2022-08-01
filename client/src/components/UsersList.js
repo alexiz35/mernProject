@@ -16,8 +16,8 @@ export function UsersList(props) {
 
 
     return (
-        <div className="table" style={{overflowY: 'auto', maxHeight: '450px'}}>
-            <table className="table table-dark table-hover">
+        <div className="table-responsive-lg" style={{overflowY: 'auto', maxHeight: '450px'}}>
+            <table className="table  table-dark table-hover" >
 
                 <thead>
                 <tr>
