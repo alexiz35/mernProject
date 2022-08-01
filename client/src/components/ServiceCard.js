@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 
 export const ServiceCard = ({service,user}) => {
 
@@ -44,4 +45,9 @@ ServiceCard.defaultProps = {
         firstName: '-------------',
         lastName: '-------------'
     }
+}
+
+ServiceCard.propTypes = {
+    service: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 }

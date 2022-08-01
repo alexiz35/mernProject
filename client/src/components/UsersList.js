@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import {AuthContext} from "../context/AuthContext";
+import PropTypes from "prop-types"
 
 export function UsersList(props) {
     const {setGetId} = useContext(AuthContext)
@@ -47,4 +48,9 @@ export function UsersList(props) {
 
         </div>
     )
+}
+
+UsersList.propTypes = {
+    users: PropTypes.array.isRequired,
+    clickField: PropTypes.func
 }

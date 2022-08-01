@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types"
+
 
 export const UserCard = (props) => {
 
@@ -49,4 +51,9 @@ UserCard.defaultProps = {
         phone: '-----------',
         email: '-----------'
     }
+}
+UserCard.propTypes = {
+    button: PropTypes.string,
+    user: PropTypes.object.isRequired,
+    clickButton: PropTypes.func
 }

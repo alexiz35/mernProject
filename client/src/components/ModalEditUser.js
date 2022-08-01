@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Modal from "bootstrap/js/src/modal";
+import PropTypes from "prop-types"
 
 export const ModalEditUser = (props) => {
     const {userField} = props
@@ -87,6 +88,10 @@ ModalEditUser.defaultProps = {
         lastName: 'lastName',
         phone: 'phone'
     }
+}
+
+ModalEditUser.propTypes = {
+    userField: PropTypes.object.isRequired
 }
 
 export const editUserHandler = () => {

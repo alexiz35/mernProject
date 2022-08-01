@@ -1,7 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom"
-
-
+import PropTypes from "prop-types"
 
 export const ServicesList = ({services: services, enableStatus, clickAdd, clickField, clickStatus}) => {
     if (!services.length) {
@@ -115,4 +114,12 @@ export const ServicesList = ({services: services, enableStatus, clickAdd, clickF
             </table>
             </div>
     )
+}
+
+ServicesList.propTypes = {
+    services: PropTypes.array.isRequired,
+    enableStatus: PropTypes.bool,
+    clickAdd: PropTypes.func,
+    clickField: PropTypes.func,
+    clickStatus: PropTypes.func,
 }

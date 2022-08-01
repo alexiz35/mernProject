@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext";
+import PropTypes from "prop-types"
 
 export const Navbar = (props) => {
     const navigate = useNavigate()
@@ -49,4 +50,8 @@ export const Navbar = (props) => {
             </div>
         </nav>
     )
+}
+
+Navbar.propTypes = {
+    admin: PropTypes.bool.isRequired
 }
