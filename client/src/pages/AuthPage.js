@@ -3,7 +3,7 @@ import {useNavigate} from "react-router";
 import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
 import styled from './AuthPage.module.css'
-import Electro from "../components/Electro";
+import CanvasElectro from "../components/CanvasElectro";
 
 
 export const AuthPage = () => {
@@ -14,9 +14,7 @@ export const AuthPage = () => {
     const [form, setForm] = useState({
         email: '', password: ''
     })
-//----------------------------------------------------------------------
 
-//----------------------------------------------------------------------
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -41,22 +39,21 @@ export const AuthPage = () => {
         }
     }
 
+
     useEffect(() => {
         error && alert(error)
         clearError()
 
     }, [error, clearError])
 
-    /*useEffect(()=>{
-        window.location.reload()
-    },[auth])*/
 
 
     return (
         <>
             <div>
-            {/*<canvas id="canvas" className={styled.canvas}/>
-            <Electro/>*/}
+            <div className={styled.canvas}>
+                <CanvasElectro/>
+            </div>
             <div className={styled.section}>
                 <div className="container">
                     <div className={`row ${styled.fullHeight}  justify-content-center`}>
@@ -173,47 +170,3 @@ export const AuthPage = () => {
 }
 
 
-{/*<div className="form-floating mb-3">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="email"
-                                        name="email"
-                                        placeholder="name@example.com"
-                                        value={form.email}
-                                        onChange={changeHandler}
-                                    />
-                                    <label htmlFor="email">Email address</label>
-                                </div>*/
-}
-{/*<div className="form-floating">
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        name="password"
-                                        placeholder="Password"
-                                        value={form.password}
-                                        onChange={changeHandler}
-                                    />
-                                    <label htmlFor="password">Password</label>
-                                </div>*/
-}
-{/*<div className="mt-4">
-                                    <button
-                                        className="btn-dark btn me-3 col-12"
-
-                                        disabled={loading}
-                                        onClick={loginHandler}
-                                    >
-                                        Login
-                                    </button>
-                                    <button
-                                        className={"btn-dark btn me-3 col-12 mt-3"}
-                                        onClick={registerHandler}
-                                        disabled={loading}
-                                    >
-                                        Registration
-                                    </button>
-                                </div>*/
-}
