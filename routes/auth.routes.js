@@ -14,8 +14,8 @@ const router = Router()
 router.post(
     '/register',
     [
-        check('email', 'Incorrect email').isEmail(),
-        check('password', 'Min length password 6 character')
+        check('emailRegistration', 'Incorrect email').isEmail(),
+        check('passwordRegistration', 'Min length password 6 character')
             .isLength({min: 6})
     ],
     async (req, res) => {
@@ -29,16 +29,16 @@ router.post(
                 })
             }
 
-            const {email, password} = req.body
+            const {emailRegistration, passwordRegistration} = req.body
 
-            const candidate = await User.findOne({email: email})
+            const candidate = await User.findOne({email: emailRegistration})
 
             if (candidate) {
                 return res.status(400).json({message: 'User already exists'})
             }
-            const hashedPassword = await bcrypt.hash(password, 12)
-            const user = new User({email, password: hashedPassword})
-
+            const hashedPassword = await bcrypt.hash(passwordRegistration, 12)
+            const user = new User({email: emailRegistration, password: hashedPassword})
+            console.log(user)
             await user.save()
 
             res.status(201).json({message: 'User created'})

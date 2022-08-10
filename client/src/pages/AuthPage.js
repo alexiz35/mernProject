@@ -1,46 +1,112 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router";
 import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
 import styled from './AuthPage.module.css'
 import CanvasElectro from "../components/CanvasElectro";
+import {ValidateLabel} from "../components/ValidateLabel";
 
 
 export const AuthPage = () => {
     const navigate = useNavigate()
     const auth = useContext(AuthContext)
     const {loading, request, error, clearError} = useHttp()
+    const passwordRegistration = useRef()
+
+    const patternPassDigit = new RegExp("(?=.*[0-9])")
+    const patternPassLower = new RegExp("(?=.*[a-z])")
+    const patternPassUpper = new RegExp("(?=.*[A-Z])")
+    const patternPassSpecial = new RegExp("(?=.*[!@#$%^&*])")
 
     const [form, setForm] = useState({
         email: '', password: '', emailRegistration: '', passwordRegistration: ''
     })
-    const [emailValid, setEmailValid] = useState('')
-    const [passwordValid, setPasswordValid] = useState('')
-    const [formValid, setFormValid] = useState('')
-    const [validError, setValidError] = useState('')
-    const [color,setColor] = useState('#c4c3ca')
+    const [emailValid, setEmailValid] = useState(false)
+    const [passwordValid, setPasswordValid] = useState(false)
+    const [hiddenLabel, setHiddenLabel] = useState(true)
+    const [validateLabelColor, setValidateLabelColor] = useState({
+        colorLength: 'red',
+        colorUpper: 'red',
+        colorLower: 'red',
+        colorSpecial: 'red',
+        colorDigit: 'red'
+    })
+    const [colorEmail, setColorEmail] = useState('#c4c3ca')
+    const [colorPassword, setColorPassword] = useState('#c4c3ca')
+    const [eyePass, setEyePass] = useState(" bi bi-eye-slash")
 
 
     const changeHandler = event => {
-        checkValidation(event)
+        if (event.target.name === 'passwordRegistration') checkPassValidation(event)
+        else checkEmailValidation(event)
         setForm({...form, [event.target.name]: event.target.value})
     }
 
-    const checkValidation = (event) => {
-        if (event.target.validity.tooShort) {
-            setColor('red')
-            console.log('short')
-            setPasswordValid(false)
-        } else if (event.target.validity.patternMismatch) {
-            setColor('blue')
-            event.target.setCustomValidity('Input valid Password')
-            console.log('falsePattern:',event.target.validity.patternMismatch)
-            setPasswordValid(false)
+    const handleBlur = () => {
+        setHiddenLabel(true)
+    }
+
+    const handleFocus = () => {
+        if (!passwordValid) {
+            setHiddenLabel(false)
         }
-        else {
-            setColor('green')
-            console.log('valid pattern:',event.target.validity.patternMismatch)
+    }
+
+    const handleViewPass = () => {
+        if (passwordRegistration.current.type === 'text') {
+            passwordRegistration.current.type = 'password'
+            setEyePass(' bi bi-eye-slash')
+        } else {
+            setEyePass(" bi bi-eye")
+            passwordRegistration.current.type = 'text'
+        }
+    }
+
+    const checkPassValidation = (event) => {
+        const target = event.target
+        const labelColor = validateLabelColor
+
+        if (target.value === '') {
+            setPasswordValid(false)
+            setColorPassword('#c4c3ca')
+            return
+        }
+
+        if (!target.validity.valid) {
+            setPasswordValid(false);
+            setColorPassword('red');
+            setHiddenLabel(false);
+
+            (target.validity.tooShort) ? labelColor.colorLength = 'red' : labelColor.colorLength = 'green';
+            (!patternPassDigit.test(event.target.value)) ? labelColor.colorDigit = 'red' : labelColor.colorDigit = 'green';
+            (!patternPassLower.test(event.target.value)) ? labelColor.colorLower = 'red' : labelColor.colorLower = 'green';
+            (!patternPassUpper.test(event.target.value)) ? labelColor.colorUpper = 'red' : labelColor.colorUpper = 'green';
+            (!patternPassSpecial.test(event.target.value)) ? labelColor.colorSpecial = 'red' : labelColor.colorSpecial = 'green';
+
+            setValidateLabelColor(labelColor)
+        } else {
             setPasswordValid(true)
+            setColorPassword('green')
+            setHiddenLabel(true)
+        }
+    }
+
+    const checkEmailValidation = (event) => {
+        const target = event.target
+
+        if (target.value === '') {
+            setEmailValid(false)
+            setColorEmail('#c4c3ca')
+            return
+        }
+
+        if (!target.validity.valid) {
+            setEmailValid(false);
+            setColorEmail('red');
+        } else {
+            setEmailValid(true)
+            setColorEmail('green')
+            setHiddenLabel(true)
         }
     }
 
@@ -116,6 +182,7 @@ export const AuthPage = () => {
                                                                 value={form.password}
                                                                 onChange={changeHandler}
                                                                 autoComplete="off"
+                                                                required
                                                             />
                                                             <i className={styled.inputIcon + " bi bi-key"}/>
                                                         </div>
@@ -126,10 +193,10 @@ export const AuthPage = () => {
                                                         >
                                                             Login
                                                         </button>
-                                                        {/*<a href="#" className="btn mt-4">submit</a>*/}
-                                                        <p className="mb-0 mt-4 text-center"><a href="#0"
-                                                                                                className={styled.link}>Forgot
-                                                            your password?</a></p>
+                                                        <p className="mb-0 mt-4 text-center"><a href="/"
+                                                                                                className={styled.link}>
+                                                            Forgot your password?
+                                                        </a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -138,11 +205,6 @@ export const AuthPage = () => {
                                                 <div className={styled.centerWrap}>
                                                     <div className={styled.section + " text-center"}>
                                                         <h4 className="mb-4 pb-3">Sign Up</h4>
-                                                        {/*<div className="form-group">
-                                                    <input type="text" name="logname" className="form-style"
-                                                           placeholder="Your Full Name" id="logname" autoComplete="off"/>
-                                                        <i className="input-icon uil uil-user"/>
-                                                </div>*/}
                                                         <div className={styled.formGroup + " mt-2"}>
                                                             <input
                                                                 type="email"
@@ -158,17 +220,21 @@ export const AuthPage = () => {
                                                                 pattern={"^[A-Za-z0-9._-]+@([A-Za-z0-9_-]+)\\.+[A-Za-z]{2,4}$"}
                                                                 required
                                                             />
-                                                            <i className={styled.inputIcon + " bi bi-envelope-fill"} style={{color: color}}/>
+                                                            <i className={styled.inputIcon + " bi bi-envelope-fill"}
+                                                               style={{color: colorEmail}}/>
                                                         </div>
                                                         <div className={styled.formGroup + " mt-2"}>
                                                             <input
-                                                                type="text"
+                                                                ref={passwordRegistration}
+                                                                type="password"
                                                                 name="passwordRegistration"
                                                                 className={styled.formStyle}
                                                                 placeholder="Your Password"
                                                                 id="passwordRegistration"
                                                                 value={form.passwordRegistration}
                                                                 onChange={changeHandler}
+                                                                onBlur={handleBlur}
+                                                                onFocus={handleFocus}
                                                                 autoComplete="off"
                                                                 formNoValidate
                                                                 minLength={6}
@@ -176,15 +242,29 @@ export const AuthPage = () => {
                                                                 pattern={"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]+$"}
                                                                 required
                                                             />
-                                                            <i className={styled.inputIcon + " bi bi-key"} style={{color: color}}/>
+                                                            <i className={styled.inputIcon + " bi bi-key"}
+                                                               style={{color: colorPassword}}/>
+                                                            <i className={styled.inputIconEnd + eyePass}
+                                                               style={{color: colorPassword}}
+                                                               onClick={handleViewPass}
+                                                            />
                                                         </div>
-                                                        <button
-                                                            className={styled.btn + " mt-4"}
-                                                            disabled={!passwordValid}
-                                                            onClick={registerHandler}
-                                                        >
-                                                            Sign Up
-                                                        </button>
+
+                                                        {
+                                                            (passwordValid || hiddenLabel) ?
+
+                                                                <button
+                                                                    className={styled.btn + " mt-4"}
+                                                                    disabled={!passwordValid || !emailValid}
+                                                                    onClick={registerHandler}
+                                                                >
+                                                                    Sign Up
+                                                                </button>
+                                                                :
+                                                                <ValidateLabel
+                                                                    validateLabelColor={validateLabelColor}
+                                                                />
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
