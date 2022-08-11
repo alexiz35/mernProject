@@ -148,7 +148,7 @@ export const ServicesPage = () => {
                         onChange={searchServiceHandler}
                     />
                 </div>
-                <h4 className="">List request</h4>
+                <h4 style={{color: "black"}}>List request</h4>
 
                 {!loading &&
                 <ServicesList

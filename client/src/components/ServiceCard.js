@@ -6,10 +6,10 @@ export const ServiceCard = ({service,user}) => {
     return (
         <>
 
-            <div className="card-header ">
-                <h5 className="text-center">Service card</h5>
+            <div className="card-header mt-5">
+                <h5 className="text-center" style={{color:'black'}}>Service card</h5>
             </div>
-            <div className="card-title">
+            <div className="card-title " style={{color:'black'}}>
                 <h6 className="text-center">{`${new Date(service.date).toLocaleDateString()} (client: ${user.firstName} ${user.lastName})`} </h6>
             </div>
             <div className="card-text">

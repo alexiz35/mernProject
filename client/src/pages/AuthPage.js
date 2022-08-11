@@ -240,7 +240,7 @@ export const AuthPage = () => {
                                                                 minLength={6}
                                                                 maxLength={12}
                                                                 pattern={"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]+$"}
-                                                                required
+                                                                required 
                                                             />
                                                             <i className={styled.inputIcon + " bi bi-key"}
                                                                style={{color: colorPassword}}/>
