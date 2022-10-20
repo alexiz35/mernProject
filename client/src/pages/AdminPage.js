@@ -5,7 +5,11 @@ import {useNavigate} from "react-router";
 import {UsersList} from "../components/UsersList";
 import {UserCard} from "../components/UserCard";
 import {filterTable, getFieldId} from "../components/Function";
-
+import mainStore from '../store/store'
+import {setPage2} from '../store/actions'
+import {SET_PAGE} from "../store/actionTypes";
+import {useDispatch} from "react-redux";
+import * as actions from '../store/actions'
 
 export const AdminPage = () => {
 
@@ -15,6 +19,7 @@ export const AdminPage = () => {
     const [tempUsers, setTempUsers] = useState([])
     const [fieldSearch, setFieldSearch] = useState('email')
     const {loading, request} = useHttp()
+    const dispatch = useDispatch()
 
 
     const getUserId = () => {
@@ -52,7 +57,11 @@ export const AdminPage = () => {
 
     useEffect(() => {
         fetchServices()
-        setPage('Admin page')
+        /*setPage('Admin page')*/
+        dispatch(actions.setPage2({
+            title:'Admin'
+        }))
+
     }, [fetchServices])
 
 

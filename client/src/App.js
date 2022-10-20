@@ -9,6 +9,7 @@ import "bootstrap"
 
 
 
+
 function App() {
     const {token,login,logout,userId,ready,admin} = useAuth()
     const isAuthenticated = !!token
@@ -24,16 +25,25 @@ function App() {
     }
 
     return (
+
         <AuthContext.Provider value={{
-            token,login,logout, userId, isAuthenticated, admin, getId, setGetId, user, setUser, page, setPage
+            token,login,logout, userId, admin, getId, setGetId, user, setUser, page, setPage
         }}>
+
         <Router>
             {isAuthenticated && <Navbar admin={admin}/>}
+
             <div className="container-fluid" >
+
                 {routes}
+
             </div>
+
         </Router>
+
+
         </AuthContext.Provider>
+
     );
 }
 
